@@ -9,7 +9,7 @@ const useToast = () => {
     (toastProperty: IToastProperty) => {
       onPresent(toastProperty);
     },
-    [onPresent]
+    [onPresent],
   );
 
   return { toast: handlePresent };

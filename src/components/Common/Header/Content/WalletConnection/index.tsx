@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { useWeb3React } from '@web3-react/core';
 import Modal from 'components/Common/Modal';
 import useAuth from 'hooks/useAuth';
 import useModal from 'hooks/useModal';
-import useToast from 'hooks/useToast';
 import { connectors } from 'connectors';
 import { ConnectorKey } from 'config/lsKey';
-import { shortenAddress } from 'helpers/format';
+import { shortenAddress } from 'libs/helpers/format';
 
 const variables = {
   color: '#0062ff',

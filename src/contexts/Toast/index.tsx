@@ -15,25 +15,29 @@ const ToastContext = createContext<ToastProps>({
 
 const ToastProvider: React.FC = ({ children }) => {
   const notify = useCallback((toastProperty: IToastProperty) => {
-    const { description, type } = toastProperty;
+    const { description, type, position } = toastProperty;
+    let area = ToastPosition
+    if (position) {
+      area = position
+    }
     switch (type) {
       case 'success': {
-        return toast.success(`🟦 ${description}`, { position: ToastPosition });
+        return toast.success(`🟦 ${description}`, { position: area });
       }
       case 'error': {
-        return toast.error(`🟥 ${description}`, { position: ToastPosition });
+        return toast.error(`🟥 ${description}`, { position: area });
       }
       case 'warn': {
-        return toast.warn(`🟧 ${description}`, { position: ToastPosition });
+        return toast.warn(`🟧 ${description}`, { position: area });
       }
       case 'info': {
-        return toast.info(`🟩 ${description}`, { position: ToastPosition });
+        return toast.info(`🟩 ${description}`, { position: area });
       }
       case 'dark': {
-        return toast.dark(`⬛ ${description}`, { position: ToastPosition });
+        return toast.dark(`⬛ ${description}`, { position: area });
       }
       default: {
-        return toast(`🟨 ${description}`, { position: ToastPosition });
+        return toast(`🟨 ${description}`, { position: area });
       }
     }
   }, []);
@@ -41,7 +45,7 @@ const ToastProvider: React.FC = ({ children }) => {
   return (
     <ToastContext.Provider value={{ onPresent: notify }}>
       {children}
-      <ToastContainer autoClose={ToastDuration} />
+      <ToastContainer autoClose={ToastDuration} style={{ width:'85%' }} />
     </ToastContext.Provider>
   );
 };

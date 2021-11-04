@@ -1,3 +1,4 @@
+import { getAddress } from '@ethersproject/address';
 import { ethers, BigNumber } from 'ethers';
 
 /**
@@ -35,3 +36,18 @@ export function stringToBytes32(string: string): string {
 export function toHexString(value: any): string {
   return ethers.utils.hexStripZeros(BigNumber.from(value).toHexString());
 }
+
+export const insertSpace = (str: string): string => {
+  return str.split('').join(' ');
+};
+
+export const shortenAddress = (address: string, chars: number = 4): string => {
+  try {
+    const parsed = getAddress(address);
+    return `${parsed.substring(0, chars + 2)}...${parsed.substring(
+      42 - chars,
+    )}`;
+  } catch (e) {
+    throw Error(`Invalid 'address', params '${address}'.`);
+  }
+};

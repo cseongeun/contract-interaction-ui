@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { insertSpace } from 'helpers/format';
+import { insertSpace } from 'libs/helpers/format';
 
 const HeaderContent = styled.div`
   display: flex;

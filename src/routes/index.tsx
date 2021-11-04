@@ -1,11 +1,11 @@
 import React, { lazy } from 'react';
 
 import Loader from 'components/Common/Loader';
-// import PrivateRoute from 'components/Common/PrivateRoute'
 import { GlobalStyle } from 'components/Common/GlobalStyle';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
-const Dashboard = lazy(() => import('pages/Contract'));
+const ContractInteraction = lazy(() => import('pages/ContractInteraction'));
+const Info = lazy(() => import('pages/Info'));
 
 
 const Routes: React.FC = () => {
@@ -14,7 +14,10 @@ const Routes: React.FC = () => {
       <Router>
         <Switch>
           <Route exact path='/'>
-            <Dashboard />
+            <ContractInteraction />
+          </Route>
+          <Route exact path='/info'>
+            <Info />
           </Route>
         </Switch>
       </Router>

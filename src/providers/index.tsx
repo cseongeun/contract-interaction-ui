@@ -3,14 +3,18 @@ import { HelmetProvider } from 'react-helmet-async';
 import Web3Provider from 'providers/Web3Provider';
 import ModalProvider from 'contexts/Modal';
 import ToastProvider from 'contexts/Toast';
-import Web3ReactManager from '../components/Common/Web3ReactManager';
+import BroadcastProvider from 'contexts/Broadcast';
 
 const Providers: React.FC = ({ children }) => {
   return (
     <HelmetProvider>
       <Web3Provider>
         <ModalProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            <BroadcastProvider>
+              {children}
+            </BroadcastProvider>
+          </ToastProvider>
         </ModalProvider>
       </Web3Provider>
     </HelmetProvider>

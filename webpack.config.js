@@ -23,7 +23,8 @@ const optimization = () => {
   return isDevelopment ? development : production;
 };
 
-const fileName = ext => (isDevelopment ? `[name].${ext}` : `[name].[hash].${ext}`);
+const fileName = ext =>
+  isDevelopment ? `[name].${ext}` : `[name].[hash].${ext}`;
 
 const devTool = () => (isDevelopment ? 'source-map' : '');
 
@@ -41,7 +42,6 @@ module.exports = {
       src: path.resolve(__dirname, 'src/'),
       api: path.resolve(__dirname, 'src/api/'),
       store: path.resolve(__dirname, 'src/store/'),
-      helpers: path.resolve(__dirname, 'src/helpers/'),
       assets: path.resolve(__dirname, 'src/assets/'),
       components: path.resolve(__dirname, 'src/components/'),
       pages: path.resolve(__dirname, 'src/pages/'),
@@ -51,6 +51,7 @@ module.exports = {
       contexts: path.resolve(__dirname, 'src/contexts/'),
       hooks: path.resolve(__dirname, 'src/hooks/'),
       config: path.resolve(__dirname, 'src/config/'),
+      libs: path.resolve(__dirname, 'src/libs/'),
     },
   },
   devtool: devTool(),
@@ -70,7 +71,9 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            plugins: [['@babel/plugin-proposal-class-properties', { loose: false }]],
+            plugins: [
+              ['@babel/plugin-proposal-class-properties', { loose: false }],
+            ],
           },
         },
       },

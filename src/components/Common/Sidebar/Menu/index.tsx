@@ -18,10 +18,16 @@ const Wrapper = styled.nav`
 
 const itemsData = [
   {
-    name: 'Contract',
+    name: 'Interaction',
     icon: IconDashboard(),
     link: '/',
   },
+  {
+    name: 'Info',
+    icon: IconTasks(),
+    link: '/info',
+  },
+
 ];
 
 interface IItemProps {

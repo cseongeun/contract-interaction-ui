@@ -1,325 +1,315 @@
-import {
-  computed,
-  observable,
-  flow,
-  makeObservable,
-  autorun,
-  action,
-} from "mobx";
-import { ThemeConsumer } from "styled-components";
-import { isAddress } from "../../libs/helpers/address";
-import { isNull } from "../../libs/helpers/type";
-import { AbiStateMutability, AbiType } from "./types";
+import { computed, observable, makeObservable } from 'mobx';
+import { isAddress } from 'libs/helpers/address';
 
 class ContractStore {
   addressError: boolean = false;
   abiError: boolean = false;
 
-  address: string = "0x0609801248b5A4A43e36492eA3a62c81999cF552";
+  address: string = '0x0609801248b5A4A43e36492eA3a62c81999cF552';
   abi: any = [
     {
       inputs: [
         {
-          internalType: "string",
-          name: "name",
-          type: "string",
+          internalType: 'string',
+          name: 'name',
+          type: 'string',
         },
         {
-          internalType: "string",
-          name: "symbol",
-          type: "string",
+          internalType: 'string',
+          name: 'symbol',
+          type: 'string',
         },
       ],
-      stateMutability: "nonpayable",
-      type: "constructor",
+      stateMutability: 'nonpayable',
+      type: 'constructor',
     },
     {
       anonymous: false,
       inputs: [
         {
           indexed: true,
-          internalType: "address",
-          name: "owner",
-          type: "address",
+          internalType: 'address',
+          name: 'owner',
+          type: 'address',
         },
         {
           indexed: true,
-          internalType: "address",
-          name: "spender",
-          type: "address",
+          internalType: 'address',
+          name: 'spender',
+          type: 'address',
         },
         {
           indexed: false,
-          internalType: "uint256",
-          name: "value",
-          type: "uint256",
+          internalType: 'uint256',
+          name: 'value',
+          type: 'uint256',
         },
       ],
-      name: "Approval",
-      type: "event",
+      name: 'Approval',
+      type: 'event',
     },
     {
       anonymous: false,
       inputs: [
         {
           indexed: true,
-          internalType: "address",
-          name: "from",
-          type: "address",
+          internalType: 'address',
+          name: 'from',
+          type: 'address',
         },
         {
           indexed: true,
-          internalType: "address",
-          name: "to",
-          type: "address",
+          internalType: 'address',
+          name: 'to',
+          type: 'address',
         },
         {
           indexed: false,
-          internalType: "uint256",
-          name: "value",
-          type: "uint256",
+          internalType: 'uint256',
+          name: 'value',
+          type: 'uint256',
         },
       ],
-      name: "Transfer",
-      type: "event",
+      name: 'Transfer',
+      type: 'event',
     },
     {
       inputs: [
         {
-          internalType: "address",
-          name: "owner",
-          type: "address",
+          internalType: 'address',
+          name: 'owner',
+          type: 'address',
         },
         {
-          internalType: "address",
-          name: "spender",
-          type: "address",
+          internalType: 'address',
+          name: 'spender',
+          type: 'address',
         },
       ],
-      name: "allowance",
+      name: 'allowance',
       outputs: [
         {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
+          internalType: 'uint256',
+          name: '',
+          type: 'uint256',
         },
       ],
-      stateMutability: "view",
-      type: "function",
+      stateMutability: 'view',
+      type: 'function',
     },
     {
       inputs: [
         {
-          internalType: "address",
-          name: "spender",
-          type: "address",
+          internalType: 'address',
+          name: 'spender',
+          type: 'address',
         },
         {
-          internalType: "uint256",
-          name: "amount",
-          type: "uint256",
+          internalType: 'uint256',
+          name: 'amount',
+          type: 'uint256',
         },
       ],
-      name: "approve",
+      name: 'approve',
       outputs: [
         {
-          internalType: "bool",
-          name: "",
-          type: "bool",
+          internalType: 'bool',
+          name: '',
+          type: 'bool',
         },
       ],
-      stateMutability: "nonpayable",
-      type: "function",
+      stateMutability: 'nonpayable',
+      type: 'function',
     },
     {
       inputs: [
         {
-          internalType: "address",
-          name: "account",
-          type: "address",
+          internalType: 'address',
+          name: 'account',
+          type: 'address',
         },
       ],
-      name: "balanceOf",
+      name: 'balanceOf',
       outputs: [
         {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
+          internalType: 'uint256',
+          name: '',
+          type: 'uint256',
         },
       ],
-      stateMutability: "view",
-      type: "function",
+      stateMutability: 'view',
+      type: 'function',
     },
     {
       inputs: [
         {
-          internalType: "address",
-          name: "account",
-          type: "address",
+          internalType: 'address',
+          name: 'account',
+          type: 'address',
         },
         {
-          internalType: "uint256",
-          name: "amount",
-          type: "uint256",
+          internalType: 'uint256',
+          name: 'amount',
+          type: 'uint256',
         },
       ],
-      name: "burn",
+      name: 'burn',
       outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
+      stateMutability: 'nonpayable',
+      type: 'function',
     },
     {
       inputs: [],
-      name: "decimals",
+      name: 'decimals',
       outputs: [
         {
-          internalType: "uint8",
-          name: "",
-          type: "uint8",
+          internalType: 'uint8',
+          name: '',
+          type: 'uint8',
         },
       ],
-      stateMutability: "view",
-      type: "function",
+      stateMutability: 'view',
+      type: 'function',
     },
     {
       inputs: [
         {
-          internalType: "address",
-          name: "spender",
-          type: "address",
+          internalType: 'address',
+          name: 'spender',
+          type: 'address',
         },
         {
-          internalType: "uint256",
-          name: "subtractedValue",
-          type: "uint256",
+          internalType: 'uint256',
+          name: 'subtractedValue',
+          type: 'uint256',
         },
       ],
-      name: "decreaseAllowance",
+      name: 'decreaseAllowance',
       outputs: [
         {
-          internalType: "bool",
-          name: "",
-          type: "bool",
+          internalType: 'bool',
+          name: '',
+          type: 'bool',
         },
       ],
-      stateMutability: "nonpayable",
-      type: "function",
+      stateMutability: 'nonpayable',
+      type: 'function',
     },
     {
       inputs: [
         {
-          internalType: "address",
-          name: "spender",
-          type: "address",
+          internalType: 'address',
+          name: 'spender',
+          type: 'address',
         },
         {
-          internalType: "uint256",
-          name: "addedValue",
-          type: "uint256",
+          internalType: 'uint256',
+          name: 'addedValue',
+          type: 'uint256',
         },
       ],
-      name: "increaseAllowance",
+      name: 'increaseAllowance',
       outputs: [
         {
-          internalType: "bool",
-          name: "",
-          type: "bool",
+          internalType: 'bool',
+          name: '',
+          type: 'bool',
         },
       ],
-      stateMutability: "nonpayable",
-      type: "function",
+      stateMutability: 'nonpayable',
+      type: 'function',
     },
     {
       inputs: [],
-      name: "name",
+      name: 'name',
       outputs: [
         {
-          internalType: "string",
-          name: "",
-          type: "string",
+          internalType: 'string',
+          name: '',
+          type: 'string',
         },
       ],
-      stateMutability: "view",
-      type: "function",
+      stateMutability: 'view',
+      type: 'function',
     },
     {
       inputs: [],
-      name: "symbol",
+      name: 'symbol',
       outputs: [
         {
-          internalType: "string",
-          name: "",
-          type: "string",
+          internalType: 'string',
+          name: '',
+          type: 'string',
         },
       ],
-      stateMutability: "view",
-      type: "function",
+      stateMutability: 'view',
+      type: 'function',
     },
     {
       inputs: [],
-      name: "totalSupply",
+      name: 'totalSupply',
       outputs: [
         {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
+          internalType: 'uint256',
+          name: '',
+          type: 'uint256',
         },
       ],
-      stateMutability: "view",
-      type: "function",
+      stateMutability: 'view',
+      type: 'function',
     },
     {
       inputs: [
         {
-          internalType: "address",
-          name: "recipient",
-          type: "address",
+          internalType: 'address',
+          name: 'recipient',
+          type: 'address',
         },
         {
-          internalType: "uint256",
-          name: "amount",
-          type: "uint256",
+          internalType: 'uint256',
+          name: 'amount',
+          type: 'uint256',
         },
       ],
-      name: "transfer",
+      name: 'transfer',
       outputs: [
         {
-          internalType: "bool",
-          name: "",
-          type: "bool",
+          internalType: 'bool',
+          name: '',
+          type: 'bool',
         },
       ],
-      stateMutability: "nonpayable",
-      type: "function",
+      stateMutability: 'nonpayable',
+      type: 'function',
     },
     {
       inputs: [
         {
-          internalType: "address",
-          name: "sender",
-          type: "address",
+          internalType: 'address',
+          name: 'sender',
+          type: 'address',
         },
         {
-          internalType: "address",
-          name: "recipient",
-          type: "address",
+          internalType: 'address',
+          name: 'recipient',
+          type: 'address',
         },
         {
-          internalType: "uint256",
-          name: "amount",
-          type: "uint256",
+          internalType: 'uint256',
+          name: 'amount',
+          type: 'uint256',
         },
       ],
-      name: "transferFrom",
+      name: 'transferFrom',
       outputs: [
         {
-          internalType: "bool",
-          name: "",
-          type: "bool",
+          internalType: 'bool',
+          name: '',
+          type: 'bool',
         },
       ],
-      stateMutability: "nonpayable",
-      type: "function",
+      stateMutability: 'nonpayable',
+      type: 'function',
     },
   ];
   constructor() {
@@ -362,25 +352,25 @@ class ContractStore {
       writeFunctions: [],
     };
     if (this.abi.length > 0) {
-      Object.values(this.abi).map(
-        ({ type, stateMutability, inputs, outputs, name }) => {
-          if (type === "function") {
-            if (stateMutability === "view") {
-              output.readFunctions.push({
-                name,
-                inputs,
-                outputs,
-              });
-            } else {
-              output.writeFunctions.push({
-                name,
-                inputs,
-                outputs,
-              });
-            }
+      Object.values(this.abi).map(({ name, inputs, outputs, stateMutability, type }) => {
+        if (type === 'function') {
+          if (stateMutability === 'view') {
+            output.readFunctions.push({
+              name,
+              inputs,
+              outputs,
+              type: 'view',
+            });
+          } else {
+            output.writeFunctions.push({
+              name,
+              inputs,
+              outputs,
+              type: 'write',
+            });
           }
         }
-      );
+      });
     }
     return output;
   }

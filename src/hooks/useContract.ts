@@ -1,25 +1,17 @@
-import { useWeb3React } from "@web3-react/core";
-import { useMemo } from "react";
-import { getContract } from "../functions/contract";
+import { useWeb3React } from '@web3-react/core';
+import { useMemo } from 'react';
+import { getContract } from '../functions/contract';
 
-const useContract = (
-  contractAddress: string,
-  contractAbi: any,
-  withSignerIfPossible = true
-) => {
+const useContract = (contractAddress: string, contractAbi: any, withSignerIfPossible = true) => {
   const { library, account } = useWeb3React();
 
   return useMemo(() => {
     if (!contractAddress || !contractAbi || !library) return null;
+    console.log(account);
+
     try {
-      return getContract(
-        contractAddress,
-        contractAbi,
-        library,
-        withSignerIfPossible && account ? account : undefined
-      );
+      return getContract(contractAddress, contractAbi, library, withSignerIfPossible && account ? account : undefined);
     } catch (error) {
-      console.error("Failed to get contract", error);
       return null;
     }
   }, [contractAddress, contractAbi, library, withSignerIfPossible, account]);
